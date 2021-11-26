@@ -22,7 +22,7 @@ package org.lous.db.fluent
 
 import org.springframework.jdbc.core.RowMapper
 
-class SelectRow(protected val q: Query) {
+class SelectRow(private val q: Query) {
     /**
      * Expects exactly one row in query result
      *

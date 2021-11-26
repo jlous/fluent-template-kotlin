@@ -22,7 +22,7 @@ package org.lous.db.fluent
 
 import org.springframework.jdbc.core.RowMapper
 
-class SelectFirstRow(protected val q: Query) {
+class SelectFirstRow(private val q: Query) {
     fun <T> map(mapper: RowMapper<T>): T? {
         return q.spring.query(q.sql, q.params, mapper).filterNotNull().firstOrNull()
     }

@@ -63,7 +63,7 @@ class SelectColumn(private val q: Query) {
         forEach<T>(elementMapper, consumer)
     }
 
-    protected fun <T> forEach(elementMapper: RowMapper<T>, consumer: Consumer<T>) {
+    private fun <T> forEach(elementMapper: RowMapper<T>, consumer: Consumer<T>) {
         val rowMapper = RowMapper<T> { rs: ResultSet, rowNum: Int ->
             elementMapper.mapRow(rs, rowNum)
                 ?.let { consumer.accept(it) }

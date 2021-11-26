@@ -23,7 +23,7 @@ package org.lous.db.fluent
 import org.springframework.dao.IncorrectResultSizeDataAccessException
 import java.time.Instant
 
-class SelectCell(protected val q: Query) {
+class SelectCell(private val q: Query) {
     /**
      * Expects query to return exactly one row with exactly one column with a non-null value
      *

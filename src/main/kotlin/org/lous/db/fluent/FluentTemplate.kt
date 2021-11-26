@@ -24,7 +24,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import javax.sql.DataSource
 
-class FluentTemplate(val springTemplate: NamedParameterJdbcTemplate) {
+class FluentTemplate(private val springTemplate: NamedParameterJdbcTemplate) {
     constructor(dataSource: DataSource) : this(NamedParameterJdbcTemplate(dataSource))
     constructor(springTemplate: JdbcTemplate) : this(NamedParameterJdbcTemplate(springTemplate))
 

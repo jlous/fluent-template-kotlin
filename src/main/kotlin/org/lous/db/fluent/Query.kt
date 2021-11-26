@@ -29,7 +29,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class Query(val spring: NamedParameterJdbcTemplate, val sql: String) {
-    val params: TypedParams
+    val params: TypedParams = TypedParams()
 
     val select get() = Select(this)
 
@@ -98,7 +98,4 @@ class Query(val spring: NamedParameterJdbcTemplate, val sql: String) {
         return this
     }
 
-    init {
-        params = TypedParams()
-    }
 }
