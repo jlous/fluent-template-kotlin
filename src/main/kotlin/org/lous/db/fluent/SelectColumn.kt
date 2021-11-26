@@ -57,14 +57,14 @@ class SelectColumn(private val q: Query) {
      */
     val asInstants get() = asListOf(Instant::class.java)
 
-    fun <T> forEach(elementType: Class<T>, consume: (T) -> Unit) {
-        val elementMapper: RowMapper<T> = SingleColumnRowMapper(elementType)
-        forEach<T>(elementMapper, consume)
+    fun <T> forEach(elementType: Class<T>, consume: (T?) -> Unit) {
+        val elementMapping: RowMapper<T> = SingleColumnRowMapper(elementType)
+        forEach(elementMapping, consume)
     }
 
-    private fun <T> forEach(elementMapper: RowMapper<T>, consume: (T) -> Unit) {
+    private fun <T> forEach(elementMapper: RowMapper<T>, consume: (T?) -> Unit) {
         val rowMapper = RowMapper<T> { rs: ResultSet, rowNum: Int ->
-            elementMapper.mapRow(rs, rowNum)?.let { consume(it) }
+            consume(elementMapper.mapRow(rs, rowNum))
             null
         }
         q.spring.query(q.sql, q.params, rowMapper)

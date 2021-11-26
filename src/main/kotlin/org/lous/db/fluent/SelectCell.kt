@@ -37,18 +37,16 @@ class SelectCell(private val q: Query) {
     }
 
     /**
-     * Expects query to return at most one row with exactly one column with a non-null value
+     * Expects query to return exactly one row with exactly one column
      *
      * @param elementType must be natively supported by Spring Template
-     * @return default if no row is found
-     * @throws IncorrectResultSizeDataAccessException for row counts over one
+     * @return null if cell contains null
+     * @throws IncorrectResultSizeDataAccessException for row counts other than one
      * @throws org.springframework.jdbc.IncorrectResultSetColumnCountException for column counts other than one
-     * @throws NullPointerException if cell contains null-value
      */
-    fun <T> asSingle(elementType: Class<T>, default: T): T {
+    fun <T> asNullable(elementType: Class<T>): T? {
         val hits = q.spring.queryForList(q.sql, q.params, elementType)
         return when (hits.size) {
-            0 -> default
             1 -> hits[0]
             else -> throw IncorrectResultSizeDataAccessException(1, hits.size)
         }
@@ -56,20 +54,8 @@ class SelectCell(private val q: Query) {
 
     /**
      * Expects query to return at most one row with exactly one column
-     *
-     * @param elementType must be natively supported by Spring Template
-     * @return null if cell contains null OR if no row is found
-     * @throws IncorrectResultSizeDataAccessException for row counts over one
-     * @throws org.springframework.jdbc.IncorrectResultSetColumnCountException for column counts other than one
      */
-    fun <T> asNullable(elementType: Class<T>): T? {
-        val hits = q.spring.queryForList(q.sql, q.params, elementType)
-        return when (hits.size) {
-            0 -> null
-            1 -> hits[0]
-            else -> throw IncorrectResultSizeDataAccessException(1, hits.size)
-        }
-    }
+    //TODO: fun ifPresent()
 
     /**
      * Expects exactly one column in query result with exactly one column

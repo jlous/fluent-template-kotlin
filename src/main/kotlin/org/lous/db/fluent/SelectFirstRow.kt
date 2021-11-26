@@ -24,8 +24,8 @@ import org.springframework.jdbc.core.RowMapper
 
 class SelectFirstRow(private val q: Query) {
     fun <T> map(mapper: RowMapper<T>): T? {
-        return q.spring.query(q.sql, q.params, mapper).filterNotNull().firstOrNull()
+        return q.spring.query(q.sql, q.params, mapper).firstOrNull()
     }
 
-    val asMap: Map<String, Any>? get() = q.spring.queryForList(q.sql, q.params).filterNotNull().firstOrNull()
+    val asMap: Map<String, Any>? get() = q.spring.queryForList(q.sql, q.params).firstOrNull()
 }
