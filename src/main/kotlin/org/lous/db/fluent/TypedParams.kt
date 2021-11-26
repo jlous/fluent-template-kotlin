@@ -26,37 +26,31 @@ import java.sql.Timestamp
 import java.time.Instant
 
 class TypedParams : MapSqlParameterSource() {
-    fun withBigint(name: String, value: Long): TypedParams {
+    fun withBigint(name: String, value: Long): TypedParams = this.apply {
         addValue(name, value, JDBCType.BIGINT.vendorTypeNumber)
-        return this
     }
 
-    fun withBigints(name: String, values: Collection<Long>): TypedParams {
+    fun withBigints(name: String, values: Collection<Long>): TypedParams = this.apply {
         addValue(name, values, JDBCType.BIGINT.vendorTypeNumber)
-        return this
     }
 
-    fun withVarchar(name: String, value: String): TypedParams {
+    fun withVarchar(name: String, value: String): TypedParams = this.apply {
         addValue(name, value, JDBCType.VARCHAR.vendorTypeNumber)
-        return this
     }
 
-    fun withVarchars(name: String, values: Collection<String>): TypedParams {
+    fun withVarchars(name: String, values: Collection<String>): TypedParams = this.apply {
         addValue(name, values, JDBCType.VARCHAR.vendorTypeNumber)
-        return this
     }
 
-    fun withClob(name: String, value: String): TypedParams {
+    fun withClob(name: String, value: String): TypedParams = this.apply {
         addValue(name, value, JDBCType.CLOB.vendorTypeNumber)
-        return this
     }
 
-    fun withTimestamp(name: String, value: Instant): TypedParams {
-        return withTimestamp(name, Timestamp.from(value))
+    fun withTimestamp(name: String, value: Instant): TypedParams = this.apply {
+        withTimestamp(name, Timestamp.from(value))
     }
 
-    fun withTimestamp(name: String, value: Timestamp): TypedParams {
+    fun withTimestamp(name: String, value: Timestamp): TypedParams = this.apply {
         addValue(name, value, JDBCType.TIMESTAMP.vendorTypeNumber)
-        return this
     }
 }

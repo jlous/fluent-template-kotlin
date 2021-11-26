@@ -28,14 +28,11 @@ class FluentTemplate(private val springTemplate: NamedParameterJdbcTemplate) {
     constructor(dataSource: DataSource) : this(NamedParameterJdbcTemplate(dataSource))
     constructor(springTemplate: JdbcTemplate) : this(NamedParameterJdbcTemplate(springTemplate))
 
-    fun createQuery(sql: String): Query {
-        return Query(springTemplate, sql)
-    }
+    fun createQuery(sql: String) = Query(springTemplate, sql)
 
     /**
      * Just a shorthand alias for createQuery()
      */
-    fun sql(sql: String): Query {
-        return createQuery(sql)
-    }
+    fun sql(sql: String) = createQuery(sql)
+
 }

@@ -74,7 +74,7 @@ class SelectCell(private val q: Query) {
     /**
      * Expects exactly one column in query result with exactly one column
      *
-     * @throws IncorrectResultSizeDataAccessException                          for row counts other than one
+     * @throws IncorrectResultSizeDataAccessException for row counts other than one
      * @throws org.springframework.jdbc.IncorrectResultSetColumnCountException for column counts other than one
      */
     val asString get() = asSingle(String::class.java)
@@ -82,7 +82,7 @@ class SelectCell(private val q: Query) {
     /**
      * Expects exactly one column in query result with exactly one column
      *
-     * @throws IncorrectResultSizeDataAccessException                          for row counts other than one
+     * @throws IncorrectResultSizeDataAccessException for row counts other than one
      * @throws org.springframework.jdbc.IncorrectResultSetColumnCountException for column counts other than one
      */
     val asLong get() = asSingle(Long::class.java)
@@ -90,7 +90,7 @@ class SelectCell(private val q: Query) {
     /**
      * Expects exactly one column in query result with exactly one column
      *
-     * @throws IncorrectResultSizeDataAccessException                          for row counts other than one
+     * @throws IncorrectResultSizeDataAccessException for row counts other than one
      * @throws org.springframework.jdbc.IncorrectResultSetColumnCountException for column counts other than one
      */
     val asInstant get() = asSingle(Instant::class.java)

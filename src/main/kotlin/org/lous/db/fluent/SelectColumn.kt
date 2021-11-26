@@ -24,7 +24,6 @@ import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.SingleColumnRowMapper
 import java.sql.ResultSet
 import java.time.Instant
-import java.util.function.Consumer
 
 class SelectColumn(private val q: Query) {
     /**
@@ -58,15 +57,14 @@ class SelectColumn(private val q: Query) {
      */
     val asInstants get() = asListOf(Instant::class.java)
 
-    fun <T> forEach(elementType: Class<T>, consumer: Consumer<T>) {
-        val elementMapper = SingleColumnRowMapper(elementType)
-        forEach<T>(elementMapper, consumer)
+    fun <T> forEach(elementType: Class<T>, consume: (T) -> Unit) {
+        val elementMapper: RowMapper<T> = SingleColumnRowMapper(elementType)
+        forEach<T>(elementMapper, consume)
     }
 
-    private fun <T> forEach(elementMapper: RowMapper<T>, consumer: Consumer<T>) {
+    private fun <T> forEach(elementMapper: RowMapper<T>, consume: (T) -> Unit) {
         val rowMapper = RowMapper<T> { rs: ResultSet, rowNum: Int ->
-            elementMapper.mapRow(rs, rowNum)
-                ?.let { consumer.accept(it) }
+            elementMapper.mapRow(rs, rowNum)?.let { consume(it) }
             null
         }
         q.spring.query(q.sql, q.params, rowMapper)

@@ -32,70 +32,49 @@ class Query(val spring: NamedParameterJdbcTemplate, val sql: String) {
     val params: TypedParams = TypedParams()
 
     val select get() = Select(this)
+    fun update(): Int = spring.update(sql, params)
+    fun execute() = update()
 
-    fun update(): Int {
-        return spring.update(sql, params)
-    }
-
-    fun execute() {
-        spring.update(sql, params)
-    }
-
-    fun withBigint(name: String, value: Long): Query {
+    fun withBigint(name: String, value: Long) = this.apply {
         params.withBigint(name, value)
-        return this
     }
 
-    fun withBigints(name: String, vararg values: Long): Query {
+    fun withBigints(name: String, vararg values: Long) = this.apply {
         params.withBigints(name, values.asList())
-        return this
     }
 
-    fun withBigints(name: String, values: Collection<Long>): Query {
+    fun withBigints(name: String, values: Collection<Long>) = this.apply {
         params.withBigints(name, values)
-        return this
     }
 
-    fun withVarchar(name: String, value: String): Query {
+    fun withVarchar(name: String, value: String) = this.apply {
         params.withVarchar(name, value)
-        return this
     }
 
-    fun withVarchars(name: String, values: Collection<String>): Query {
+    fun withVarchars(name: String, values: Collection<String>) = this.apply {
         params.withVarchars(name, values)
-        return this
     }
 
-    fun withVarchars(name: String, vararg values: String): Query {
+    fun withVarchars(name: String, vararg values: String) = this.apply {
         params.withVarchars(name, values.asList())
-        return this
     }
 
-    fun withClob(name: String, value: String): Query {
+    fun withClob(name: String, value: String) = this.apply {
         params.withClob(name, value)
-        return this
     }
 
-    fun withTimestamp(name: String, value: LocalDateTime): Query {
-        return withTimestamp(name, value.atZone(ZoneId.systemDefault()).toInstant())
-    }
-
-    fun withTimestamp(name: String, value: ZonedDateTime): Query {
-        return withTimestamp(name, value.toInstant())
-    }
-
-    fun withTimestamp(name: String, value: OffsetDateTime): Query {
-        return withTimestamp(name, value.toInstant())
-    }
-
-    fun withTimestamp(name: String, value: Instant): Query {
+    fun withTimestamp(name: String, value: Instant) = this.apply {
         params.withTimestamp(name, value)
-        return this
     }
 
-    fun withTimestamp(name: String, value: Timestamp): Query {
+    fun withTimestamp(name: String, value: Timestamp) = this.apply {
         params.withTimestamp(name, value)
-        return this
     }
+
+    fun withTimestamp(name: String, value: LocalDateTime) = withTimestamp(name, value.atZone(ZoneId.systemDefault()).toInstant())
+
+    fun withTimestamp(name: String, value: ZonedDateTime) = withTimestamp(name, value.toInstant())
+
+    fun withTimestamp(name: String, value: OffsetDateTime) = withTimestamp(name, value.toInstant())
 
 }

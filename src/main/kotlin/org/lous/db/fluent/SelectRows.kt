@@ -30,7 +30,5 @@ class SelectRows(private val q: Query) {
 
     val asMaps: List<Map<String, Any>> get() = q.spring.queryForList(q.sql, q.params)
 
-    fun forEach(handler: RowCallbackHandler) {
-        q.spring.query(q.sql, q.params, handler)
-    }
+    fun forEach(handler: RowCallbackHandler) = q.spring.query(q.sql, q.params, handler)
 }
